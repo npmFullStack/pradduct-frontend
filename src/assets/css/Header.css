@@ -1,0 +1,142 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Galindo&display=swap");
+
+/* Header styles */
+.header {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    height: 5rem;
+    background-color: #121212;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 4rem;
+    z-index: 1000;
+}
+
+.logo {
+    font-family: "Galindo", sans-serif;
+    font-weight: 900;
+    font-size: 1.8rem;
+    color: #ffcc00;
+    z-index: 1001;
+}
+
+/* Navigation container */
+.nav-links {
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    background-color: #121212;
+}
+
+/* Navigation links */
+.nav-link {
+    font-family: "DM Sans", sans-serif;
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: white;
+    margin: 0 1rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    padding: 0.5rem 1rem;
+}
+
+.nav-link:hover {
+    transform: scale(1.05);
+    color: #ffcc00;
+}
+
+.nav-link.active {
+    text-decoration: underline;
+    text-decoration-color: #ffcc00;
+    text-underline-offset: 5px;
+    color: #ffcc00;
+}
+
+/* Get Started button */
+.get-started-btn {
+    background-color: #ffcc00;
+    color: white;
+    border-radius: 5px;
+    padding: 0.5rem 1.5rem;
+    text-decoration: none;
+}
+
+.get-started-btn:hover {
+    background-color: #e6b800;
+    color: white;
+    transform: scale(1.05);
+    text-decoration: none;
+}
+
+.get-started-btn.active {
+    background-color: #e6b800;
+    color: white;
+    text-decoration: none;
+}
+
+/* Hamburger Menu Styles */
+.hamburger {
+    display: none;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+.bar {
+    display: block;
+    width: 20px;
+    height: 3px;
+    margin: 5px auto;
+    transition: all 0.3s ease;
+    background-color: white;
+}
+
+.hamburger .bar.open:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger .bar.open:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger .bar.open:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .header {
+        padding: 1rem 2rem;
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 60%;
+        height: 100vh;
+        background-color: #121212;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: 0.3s;
+    }
+
+    .nav-links.active {
+        right: 0;
+    }
+
+    .nav-link {
+        margin: 1.5rem 0;
+        font-size: 1.2rem;
+    }
+
+    .get-started-btn {
+        margin-top: 1.5rem;
+    }
+}

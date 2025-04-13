@@ -1,0 +1,143 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Galindo&display=swap");
+
+/* Home Section Styles */
+.home-main {
+    width: 100%;
+}
+
+.home-section {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-top: 5rem;
+    margin: 0;
+}
+
+.bg-section-1 {
+    background: url("../images/bg.png") no-repeat center center;
+    background-size: cover;
+}
+
+.bg-section-2 {
+    background: url("../images/bg2.png") no-repeat center center;
+    background-size: cover;
+}
+
+.home-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem;
+}
+
+.content-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    border-radius: 1rem;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.content-wrapper.reverse {
+    flex-direction: row-reverse;
+}
+
+.image-container {
+    flex: 1;
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    border-radius: 1rem;
+}
+
+.text-container {
+    flex: 1;
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+.title {
+    font-family: "Galindo", sans-serif;
+    font-size: 2em;
+    font-weight: 900;
+    color: #ffcc00;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.subtitle {
+    font-family: "DM Sans", sans-serif;
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    background-color: #ffcc00;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+    font-family: "DM Sans", sans-serif;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.cta-button:hover {
+    background-color: #e6b800;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.error-message {
+    color: #ff3860;
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+}
+
+.auth-error {
+    background: #ff3860;
+    color: white;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .home-container {
+        padding: 1rem;
+    }
+
+    .content-wrapper {
+        flex-direction: column;
+        padding: 1.5rem;
+        gap: 1.5rem;
+    }
+
+    .content-wrapper.reverse {
+        flex-direction: column;
+    }
+
+    .title {
+        font-size: 2.2rem;
+        text-align: center;
+    }
+
+    .subtitle {
+        font-size: 1.2rem;
+        text-align: center;
+    }
+
+    .cta-button {
+        display: block;
+        text-align: center;
+        margin: 0 auto;
+    }
+}

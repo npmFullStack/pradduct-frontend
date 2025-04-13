@@ -1,0 +1,169 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Galindo&display=swap");
+
+/* Auth.css */
+.auth-section {
+    background: url("../images/bg.png") no-repeat center center;
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    padding-top: 5rem;
+}
+
+.auth-container {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.auth-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-message {
+    height: 30%;
+    padding: 1rem 0.5rem;
+    text-align: center;
+}
+
+.auth-message h2 {
+    font-family: "Galindo", sans-serif;
+    font-weight: 900;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: #ffcc00;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.auth-message p {
+    font-family: "DM Sans", sans-serif;
+    font-size: 1rem;
+    color: #333;
+}
+
+.auth-image-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.auth-right {
+    flex: 1;
+    padding: 3rem;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+form h2 {
+    font-size: 2rem;
+    color: #ffcc00;
+    margin-bottom: 1rem;
+    font-family: "Galindo", sans-serif;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.name-fields {
+    display: flex;
+    gap: 1rem;
+}
+
+.name-fields .form-group {
+    flex: 1;
+}
+
+label {
+    font-weight: 500;
+    color: #333;
+    font-size: 0.9rem;
+}
+
+input {
+    padding: 0.8rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+input:focus {
+    outline: none;
+    border-color: #ffcc00;
+    box-shadow: 0 0 0 2px rgba(15, 76, 117, 0.2);
+}
+
+.auth-button {
+    padding: 0.8rem;
+    background: #ffcc00;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.auth-button:hover {
+    background: #082c44;
+}
+
+.auth-switch {
+    text-align: center;
+    color: #666;
+}
+
+.auth-switch span {
+    color: #ffcc00;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .auth-section {
+    padding: 5rem 0.2rem 0.5rem 0.2rem;
+  }
+    .auth-container {
+        flex-direction: column;
+        padding: 0.5rem;
+        margin: 0.5rem;
+    }
+
+    .auth-left {
+        display: none;
+    }
+
+    .auth-right {
+        padding: 2rem;
+    }
+
+    .name-fields {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
