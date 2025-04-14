@@ -11,7 +11,8 @@ import {
     faEdit,
     faTrash,
     faSpinner,
-    faPlus
+    faPlus,
+    faEllipsisVertical
 } from "@fortawesome/free-solid-svg-icons";
 import "../assets/css/Dashboard.css";
 
@@ -40,6 +41,7 @@ export default function Products() {
     const [products, setProducts] = useState([]);
     const [user, setUser] = useState(null);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+    const [showActions, setShowActions] = useState({});
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -119,11 +121,27 @@ export default function Products() {
         navigate("/add-product");
     };
 
-    const truncateDescription = description => {
-        if (!description) return "No description available";
-        return description.length > 30
-            ? `${description.substring(0, 30)}...`
-            : description;
+    const handleDeleteProduct = async productId => {
+        try {
+            if (
+                window.confirm("Are you sure you want to delete this product?")
+            ) {
+                await api.delete(`/products/${productId}`);
+                setProducts(
+                    products.filter(product => product.id !== productId)
+                );
+            }
+        } catch (err) {
+            console.error("Delete error:", err);
+            alert("Failed to delete product");
+        }
+    };
+
+    const toggleActions = productId => {
+        setShowActions(prev => ({
+            ...prev,
+            [productId]: !prev[productId]
+        }));
     };
 
     const filteredProducts = products.filter(product => {
@@ -256,138 +274,188 @@ export default function Products() {
                     </div>
 
                     <div className="products-content">
-                        {filteredProducts.length > 0 ? (
-                            activeTab === "your" && !isMobile ? (
-                                <table className="products-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Image</th>
-                                            <th>Name</th>
-                                            <th>Description</th>
-                                            <th>Price</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {filteredProducts.map(product => (
-                                            <tr key={product.id}>
-                                                <td>
-                                                    <img
-                                                        src={product.image}
-                                                        alt={product.name}
-                                                        className="table-product-image"
-                                                        onError={e =>
-                                                            (e.target.src =
-                                                                "/src/assets/images/default-product.png")
-                                                        }
-                                                    />
-                                                </td>
-                                                <td>{product.name}</td>
-                                                <td>
-                                                    {truncateDescription(
-                                                        product.description
-                                                    )}
-                                                </td>
-                                                <td>
-                                                    ${product.price.toFixed(2)}
-                                                </td>
-                                                <td>
-                                                    <div className="table-actions">
-                                                        <button
-                                                            className="edit-btn"
-                                                            onClick={() =>
-                                                                navigate(
-                                                                    `/edit-product/${product.id}`
-                                                                )
-                                                            }
-                                                        >
-                                                            <FontAwesomeIcon
-                                                                icon={faEdit}
-                                                            />
-                                                        </button>
-                                                        <button className="delete-btn">
-                                                            <FontAwesomeIcon
-                                                                icon={faTrash}
-                                                            />
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            ) : (
-                                <div className="products-grid">
-                                    {filteredProducts.map(product => (
-                                        <div
-                                            key={product.id}
-                                            className="product-card"
+{filteredProducts.length > 0 ? (
+    activeTab === "your" ? (
+        isMobile ? (
+            <div className="products-grid">
+                {filteredProducts.map(product => (
+                    <div key={product.id} className="product-card">
+                        <div className="product-image-container">
+                            <img
+                                src={product.image}
+                                alt={product.name}
+                                className="product-image"
+                                onError={e =>
+                                    (e.target.src =
+                                        "/src/assets/images/default-product.png")
+                                }
+                            />
+                            <div className="product-actions-container">
+                                <button 
+                                    className="action-menu-btn"
+                                    onClick={() => toggleActions(product.id)}
+                                >
+                                    <FontAwesomeIcon icon={faEllipsisVertical} />
+                                </button>
+                                {showActions[product.id] && (
+                                    <div className="action-menu">
+                                        <button
+                                            className="edit-btn"
+                                            onClick={() =>
+                                                navigate(
+                                                    `/edit-product/${product.id}`
+                                                )
+                                            }
                                         >
-                                            <img
-                                                src={product.image}
-                                                alt={product.name}
-                                                className="product-image"
-                                                onError={e =>
-                                                    (e.target.src =
-                                                        "/src/assets/images/default-product.png")
-                                                }
+                                            <FontAwesomeIcon
+                                                icon={faEdit}
                                             />
-                                            <h3 className="product-name">
-                                                {product.name}
-                                            </h3>
-                                            <p className="product-description">
-                                                {truncateDescription(
-                                                    product.description
-                                                )}
-                                            </p>
-                                            <div className="product-footer">
-                                                <span className="product-uploader">
-                                                    {product.end_user.firstname}{" "}
-                                                    {product.end_user.lastname}
-                                                </span>
-                                                <span className="product-price">
-                                                    ${product.price.toFixed(2)}
-                                                </span>
-                                            </div>
-                                            {activeTab === "your" && (
-                                                <div className="product-actions">
-                                                    <button
-                                                        className="edit-btn"
-                                                        onClick={() =>
-                                                            navigate(
-                                                                `/edit-product/${product.id}`
-                                                            )
-                                                        }
-                                                    >
-                                                        <FontAwesomeIcon
-                                                            icon={faEdit}
-                                                        />
-                                                    </button>
-                                                    <button className="delete-btn">
-                                                        <FontAwesomeIcon
-                                                            icon={faTrash}
-                                                        />
-                                                    </button>
-                                                </div>
-                                            )}
-                                        </div>
-                                    ))}
-                                </div>
-                            )
-                        ) : (
-                            <div className="no-products">
-                                <FontAwesomeIcon icon={faBoxOpen} size="3x" />
-                                <p>No products found</p>
-                                {searchQuery && (
-                                    <button
-                                        className="clear-search"
-                                        onClick={() => setSearchQuery("")}
-                                    >
-                                        Clear search
-                                    </button>
+                                            <span>Edit</span>
+                                        </button>
+                                        <button 
+                                            className="delete-btn"
+                                            onClick={() => handleDeleteProduct(product.id)}
+                                        >
+                                            <FontAwesomeIcon
+                                                icon={faTrash}
+                                            />
+                                            <span>Delete</span>
+                                        </button>
+                                    </div>
                                 )}
                             </div>
-                        )}
+                        </div>
+                        <h3 className="product-name">
+                            {product.name}
+                        </h3>
+                        <p className="product-description">
+                            {product.description.length > 100 
+                                ? `${product.description.substring(0, 100)}...` 
+                                : product.description}
+                        </p>
+                        <div className="product-footer">
+                            <span className="product-uploader">
+                                {product.end_user.firstname}{" "}
+                                {product.end_user.lastname}
+                            </span>
+                            <span className="product-price">
+                                ${product.price.toFixed(2)}
+                            </span>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        ) : (
+            <table className="products-table">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {filteredProducts.map(product => (
+                        <tr key={product.id}>
+                            <td>
+                                <img
+                                    src={product.image}
+                                    alt={product.name}
+                                    className="table-product-image"
+                                    onError={e =>
+                                        (e.target.src =
+                                            "/src/assets/images/default-product.png")
+                                    }
+                                />
+                            </td>
+                            <td>{product.name}</td>
+                            <td>
+                                {product.description}
+                            </td>
+                            <td>
+                                ${product.price.toFixed(2)}
+                            </td>
+                            <td>
+                                <div className="table-actions">
+                                    <button
+                                        className="edit-btn"
+                                        onClick={() =>
+                                            navigate(
+                                                `/edit-product/${product.id}`
+                                            )
+                                        }
+                                    >
+                                        <FontAwesomeIcon
+                                            icon={faEdit}
+                                        />
+                                        <span>Edit</span>
+                                    </button>
+                                    <button 
+                                        className="delete-btn"
+                                        onClick={() => handleDeleteProduct(product.id)}
+                                    >
+                                        <FontAwesomeIcon
+                                            icon={faTrash}
+                                        />
+                                        <span>Delete</span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        )
+    ) : (
+        <div className="products-grid">
+            {filteredProducts.map(product => (
+                <div key={product.id} className="product-card">
+                    <img
+                        src={product.image}
+                        alt={product.name}
+                        className="product-image"
+                        onError={e =>
+                            (e.target.src =
+                                "/src/assets/images/default-product.png")
+                        }
+                    />
+                    <h3 className="product-name">
+                        {product.name}
+                    </h3>
+                    <p className="product-description">
+                        {product.description.length > 100 
+                            ? `${product.description.substring(0, 100)}...` 
+                            : product.description}
+                    </p>
+                    <div className="product-footer">
+                        <span className="product-uploader">
+                            {product.end_user.firstname}{" "}
+                            {product.end_user.lastname}
+                        </span>
+                        <span className="product-price">
+                            ${product.price.toFixed(2)}
+                        </span>
+                    </div>
+                </div>
+            ))}
+        </div>
+    )
+) : (
+    <div className="no-products">
+        <FontAwesomeIcon icon={faBoxOpen} size="3x" />
+        <p>No products found</p>
+        {searchQuery && (
+            <button
+                className="clear-search"
+                onClick={() => setSearchQuery("")}
+            >
+                Clear search
+            </button>
+        )}
+    </div>
+)}
                     </div>
                 </main>
             </div>
