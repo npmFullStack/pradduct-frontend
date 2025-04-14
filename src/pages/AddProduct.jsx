@@ -32,12 +32,22 @@ export default function AddProduct() {
     const navigate = useNavigate();
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
+    const { name, value } = e.target;
+    if (name === "price") {
+        // Only allow numbers and decimal points
+        if (value === "" || /^[0-9]*\.?[0-9]*$/.test(value)) {
+            setFormData(prev => ({
+                ...prev,
+                [name]: value
+            }));
+        }
+    } else {
         setFormData(prev => ({
             ...prev,
             [name]: value
         }));
-    };
+    }
+};
 
     const handleFileChange = (e) => {
         setFormData(prev => ({

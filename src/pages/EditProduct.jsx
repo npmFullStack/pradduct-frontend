@@ -58,12 +58,22 @@ useEffect(() => {
 }, [id]);
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
+    const { name, value } = e.target;
+    if (name === "price") {
+        // Only allow numbers and decimal points
+        if (value === "" || /^[0-9]*\.?[0-9]*$/.test(value)) {
+            setFormData(prev => ({
+                ...prev,
+                [name]: value
+            }));
+        }
+    } else {
         setFormData(prev => ({
             ...prev,
             [name]: value
         }));
-    };
+    }
+};
 
     const handleFileChange = (e) => {
         setFormData(prev => ({
@@ -73,34 +83,34 @@ useEffect(() => {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        setError(null);
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
 
-        try {
-            const formDataToSend = new FormData();
-            formDataToSend.append('name', formData.name);
-            formDataToSend.append('description', formData.description);
-            formDataToSend.append('price', formData.price);
-            if (formData.image) {
-                formDataToSend.append('image', formData.image);
-            }
-            formDataToSend.append('_method', 'PUT');
-
-            const response = await api.post(`/products/${id}`, formDataToSend, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            });
-
-            navigate('/products');
-        } catch (err) {
-            console.error("Update product error:", err);
-            setError(err.response?.data?.message || "Failed to update product");
-        } finally {
-            setLoading(false);
+    try {
+        const formDataToSend = new FormData();
+        formDataToSend.append('name', formData.name);
+        formDataToSend.append('description', formData.description);
+        formDataToSend.append('price', formData.price);
+        if (formData.image) {
+            formDataToSend.append('image', formData.image);
         }
-    };
+        // Remove the _method=PUT line since we're using POST directly
+
+        const response = await api.post(`/products/${id}`, formDataToSend, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+
+        navigate('/products');
+    } catch (err) {
+        console.error("Update product error:", err);
+        setError(err.response?.data?.message || "Failed to update product");
+    } finally {
+        setLoading(false);
+    }
+};
 
     if (loading && !formData.name) {
         return (

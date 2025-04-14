@@ -472,6 +472,60 @@ body {
     background-color: #c0392b;
 }
 
+/* Table styles */
+.products-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.products-table th,
+.products-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.products-table th {
+    background-color: #f5f5f5;
+    font-weight: 600;
+}
+
+.table-product-image {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.table-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* Mobile add button */
+.mobile-add-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #ffc107;
+    color: white;
+    border: none;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.mobile-add-btn:hover {
+    background-color: #e0a800;
+    transform: scale(1.05);
+}
+
 /* Responsive Styles */
 @media (max-width: 992px) {
     .sidebar {
