@@ -10,6 +10,8 @@ import Home from "./pages/Home";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import Products from "./pages/Products";
+import AddProduct from "./pages/AddProduct";
+import EditProduct from "./pages/EditProduct";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function App() {
@@ -18,26 +20,35 @@ export default function App() {
             <div className="app d-flex flex-column min-vh-100">
                 <Routes>
                     {/* Public Routes with Header */}
-                    <Route path="/" element={
-                        <>
-                            <Header />
-                            <Home />
-                        </>
-                    } />
-                    
-                    <Route path="/login" element={
-                        <>
-                            <Header />
-                            <Auth />
-                        </>
-                    } />
-                    
-                    <Route path="/register" element={
-                        <>
-                            <Header />
-                            <Auth />
-                        </>
-                    } />
+                    <Route
+                        path="/"
+                        element={
+                            <>
+                                <Header />
+                                <Home />
+                            </>
+                        }
+                    />
+
+                    <Route
+                        path="/login"
+                        element={
+                            <>
+                                <Header />
+                                <Auth />
+                            </>
+                        }
+                    />
+
+                    <Route
+                        path="/register"
+                        element={
+                            <>
+                                <Header />
+                                <Auth />
+                            </>
+                        }
+                    />
 
                     {/* Protected Routes without Header */}
                     <Route
@@ -48,12 +59,30 @@ export default function App() {
                             </ProtectedRoute>
                         }
                     />
-                    
+
                     <Route
                         path="/products"
                         element={
                             <ProtectedRoute>
                                 <Products />
+                            </ProtectedRoute>
+                        }
+                    />
+
+                    <Route
+                        path="/add-product"
+                        element={
+                            <ProtectedRoute>
+                                <AddProduct />
+                            </ProtectedRoute>
+                        }
+                    />
+
+                    <Route
+                        path="/edit-product/:id"
+                        element={
+                            <ProtectedRoute>
+                                <EditProduct />
                             </ProtectedRoute>
                         }
                     />

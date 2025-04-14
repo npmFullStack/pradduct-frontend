@@ -142,7 +142,7 @@ export default function Products() {
                 </button>
                 <div className="header-title">
                     <FontAwesomeIcon
-                        icon={faChartLine}
+                        icon={faBoxOpen}
                         className="title-icon"
                     />
                     <h1>Products</h1>
@@ -244,39 +244,38 @@ export default function Products() {
                         {filteredProducts.length > 0 ? (
                             <div className="products-grid">
                                 {filteredProducts.map(product => (
-                                    <div
-                                        key={product.id}
-                                        className="product-card"
-                                    >
-                                        <img
-                                            src={
-                                                product.image ||
-                                                "/src/assets/images/default-product.png"
-                                            }
-                                            alt={product.name}
-                                            className="product-image"
-                                            onError={e =>
-                                                (e.target.src =
-                                                    "/src/assets/images/default-product.png")
-                                            }
-                                        />
-                                        <h3 className="product-name">
-                                            {product.name}
-                                        </h3>
-                                        <p className="product-description">
-                                            {product.description ||
-                                                "No description available"}
-                                        </p>
-                                        <div className="product-footer">
-                                            <span className="product-uploader">
-                                                {product.end_user.firstname}{" "}
-                                                {product.end_user.lastname}
-                                            </span>
-                                            <span className="product-price">
-                                                ${product.price.toFixed(2)}
-                                            </span>
-                                        </div>
-                                    </div>
+// Update the product card in Products.jsx to include edit button
+<div key={product.id} className="product-card">
+<img
+    src={product.image || "/src/assets/images/default-product.png"}
+    alt={product.name}
+    className="product-image"
+    onError={(e) => (e.target.src = "/src/assets/images/default-product.png")}
+/>
+    <h3 className="product-name">{product.name}</h3>
+    <p className="product-description">
+        {product.description || "No description available"}
+    </p>
+    <div className="product-footer">
+        <span className="product-uploader">
+            {product.end_user.firstname} {product.end_user.lastname}
+        </span>
+        <span className="product-price">${product.price.toFixed(2)}</span>
+    </div>
+    {activeTab === "your" && (
+        <div className="product-actions">
+            <button 
+                className="edit-btn"
+                onClick={() => navigate(`/edit-product/${product.id}`)}
+            >
+                <FontAwesomeIcon icon={faEdit} />
+            </button>
+            <button className="delete-btn">
+                <FontAwesomeIcon icon={faTrash} />
+            </button>
+        </div>
+    )}
+</div>
                                 ))}
                             </div>
                         ) : (

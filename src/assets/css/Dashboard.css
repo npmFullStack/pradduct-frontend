@@ -444,7 +444,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: #fff;
+    background-color: #fff;
     z-index: 1000;
     backdrop-filter: blur(2px);
 }
@@ -521,7 +521,7 @@ body {
     }
 
     .tab-bar {
-        width: 100%;
+        width: auto;
     }
 
     .tab-button {
