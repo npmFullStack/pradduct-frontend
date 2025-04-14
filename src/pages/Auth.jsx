@@ -1,7 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import axios from 'axios';
 import "../assets/css/Auth.css";
+
+// Create axios instance
+const api = axios.create({
+  baseURL: 'http://localhost:8001/api/v1',
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  }
+});
+
+// Add a request interceptor to include the auth token
+api.interceptors.request.use(config => {
+  const token = localStorage.getItem('authToken');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+}, error => {
+  return Promise.reject(error);
+});
 
 export default function Auth() {
     const [isLogin, setIsLogin] = useState(false);
@@ -16,13 +37,20 @@ export default function Auth() {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
+    // Check if user is already logged in
+    useEffect(() => {
+        const token = localStorage.getItem('authToken');
+        if (token) {
+            navigate('/dashboard');
+        }
+    }, [navigate]);
+
     const handleChange = (e) => {
         const { id, value } = e.target;
         setFormData(prev => ({
             ...prev,
             [id]: value
         }));
-        // Clear error when user types
         if (errors[id]) {
             setErrors(prev => ({
                 ...prev,
@@ -51,37 +79,27 @@ export default function Auth() {
                     password_confirmation: formData.confirmPassword
                 };
 
-            const response = await fetch(`http://localhost:8000/api${endpoint}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify(payload)
-            });
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                throw data;
-            }
+            const response = await api.post(endpoint, payload);
 
             // Store token and user data
-            localStorage.setItem('authToken', data.token);
-            localStorage.setItem('user', JSON.stringify(data.user));
+            localStorage.setItem('authToken', response.data.token);
+            localStorage.setItem('user', JSON.stringify(response.data.user));
 
-            // Redirect to dashboard or home page
-            navigate('/');
+            // Redirect to dashboard
+            navigate('/dashboard');
         } catch (error) {
-            if (error.errors) {
-                setErrors(error.errors);
+            if (error.response && error.response.data.errors) {
+                setErrors(error.response.data.errors);
             } else {
-                setErrors({ general: error.message || 'Something went wrong!' });
+                setErrors({ general: error.response?.data?.message || 'Something went wrong!' });
             }
         } finally {
             setIsLoading(false);
         }
     };
+
+  
+
 
     // Animation variants (unchanged from your original)
     const containerVariants = {

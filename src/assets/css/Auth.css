@@ -112,7 +112,7 @@ input {
 input:focus {
     outline: none;
     border-color: #ffcc00;
-    box-shadow: 0 0 0 2px rgba(15, 76, 117, 0.2);
+    box-shadow: 0 0 0 2px rgba(255, 204, 0, 0.4);
 }
 
 .auth-button {
@@ -128,7 +128,7 @@ input:focus {
 }
 
 .auth-button:hover {
-    background: #082c44;
+    background: #cca300;
 }
 
 .auth-switch {
@@ -145,9 +145,9 @@ input:focus {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .auth-section {
-    padding: 5rem 0.2rem 0.5rem 0.2rem;
-  }
+    .auth-section {
+        padding: 5rem 0.2rem 0.5rem 0.2rem;
+    }
     .auth-container {
         flex-direction: column;
         padding: 0.5rem;
