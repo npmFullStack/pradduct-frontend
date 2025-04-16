@@ -188,7 +188,7 @@ export default function Products() {
                     <div className="sidebar-logo">PrAdduct</div>
                     <div className="user-profile">
                         <img
-                            src="/src/assets/images/user-icon.png"
+                            src="/assets/user-icon.png"
                             alt="User"
                             className="user-avatar"
                             onError={e =>

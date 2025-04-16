@@ -189,7 +189,7 @@ export default function EditProduct() {
 
                     <div className="user-profile">
                         <img
-                            src="/src/assets/images/user-icon.png"
+                            src="/assets/user-icon.png"
                             alt="User"
                             className="user-avatar"
                             onError={e =>
@@ -236,7 +236,7 @@ export default function EditProduct() {
                             </div>
                             <div className="add-product-image">
                                 <img
-                                    src="/src/assets/images/edit-product.png"
+                                    src="/assets/edit-product.png"
                                     alt="Add Product"
                                     onError={e =>
                                         (e.target.src =

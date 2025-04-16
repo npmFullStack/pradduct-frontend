@@ -1,28 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import axios from 'axios';
+import axios from "axios";
 import "../assets/css/Auth.css";
 
 // Create axios instance
 const api = axios.create({
-  baseURL: 'http://localhost:8001/api/v1',
-  headers: {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json'
-  }
+    baseURL: "http://localhost:8001/api/v1",
+    headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+    }
 });
 
 // Add a request interceptor to include the auth token
-api.interceptors.request.use(config => {
-  const token = localStorage.getItem('authToken');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-}, error => {
-  return Promise.reject(error);
-});
+api.interceptors.request.use(
+    config => {
+        const token = localStorage.getItem("authToken");
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+    },
+    error => {
+        return Promise.reject(error);
+    }
+);
 
 export default function Auth() {
     const [isLogin, setIsLogin] = useState(false);
@@ -39,13 +42,13 @@ export default function Auth() {
 
     // Check if user is already logged in
     useEffect(() => {
-        const token = localStorage.getItem('authToken');
+        const token = localStorage.getItem("authToken");
         if (token) {
-            navigate('/dashboard');
+            navigate("/dashboard");
         }
     }, [navigate]);
 
-    const handleChange = (e) => {
+    const handleChange = e => {
         const { id, value } = e.target;
         setFormData(prev => ({
             ...prev,
@@ -59,47 +62,47 @@ export default function Auth() {
         }
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async e => {
         e.preventDefault();
         setIsLoading(true);
         setErrors({});
 
         try {
-            const endpoint = isLogin ? '/login' : '/register';
-            const payload = isLogin 
-                ? { 
-                    email: formData.email, 
-                    password: formData.password 
-                }
+            const endpoint = isLogin ? "/login" : "/register";
+            const payload = isLogin
+                ? {
+                      email: formData.email,
+                      password: formData.password
+                  }
                 : {
-                    firstname: formData.firstname,
-                    lastname: formData.lastname,
-                    email: formData.email,
-                    password: formData.password,
-                    password_confirmation: formData.confirmPassword
-                };
+                      firstname: formData.firstname,
+                      lastname: formData.lastname,
+                      email: formData.email,
+                      password: formData.password,
+                      password_confirmation: formData.confirmPassword
+                  };
 
             const response = await api.post(endpoint, payload);
 
             // Store token and user data
-            localStorage.setItem('authToken', response.data.token);
-            localStorage.setItem('user', JSON.stringify(response.data.user));
+            localStorage.setItem("authToken", response.data.token);
+            localStorage.setItem("user", JSON.stringify(response.data.user));
 
             // Redirect to dashboard
-            navigate('/dashboard');
+            navigate("/dashboard");
         } catch (error) {
             if (error.response && error.response.data.errors) {
                 setErrors(error.response.data.errors);
             } else {
-                setErrors({ general: error.response?.data?.message || 'Something went wrong!' });
+                setErrors({
+                    general:
+                        error.response?.data?.message || "Something went wrong!"
+                });
             }
         } finally {
             setIsLoading(false);
         }
     };
-
-  
-
 
     // Animation variants (unchanged from your original)
     const containerVariants = {
@@ -166,7 +169,7 @@ export default function Auth() {
                             variants={itemVariants}
                         >
                             <img
-                                src="/src/assets/images/signup.png"
+                                src="/assets/signup.png"
                                 alt="Signup illustration"
                             />
                         </motion.div>
@@ -191,7 +194,7 @@ export default function Auth() {
                             variants={itemVariants}
                         >
                             <img
-                                src="/src/assets/images/login.png"
+                                src="/assets/login.png"
                                 alt="Login illustration"
                             />
                         </motion.div>
@@ -207,13 +210,11 @@ export default function Auth() {
                     key={isLogin ? "login" : "signup"}
                 >
                     {errors.general && (
-                        <div className="auth-error">
-                            {errors.general}
-                        </div>
+                        <div className="auth-error">{errors.general}</div>
                     )}
 
                     {!isLogin ? (
-                        <motion.form 
+                        <motion.form
                             onSubmit={handleSubmit}
                             variants={containerVariants}
                         >
@@ -236,7 +237,11 @@ export default function Auth() {
                                         value={formData.firstname}
                                         onChange={handleChange}
                                     />
-                                    {errors.firstname && <span className="error-message">{errors.firstname[0]}</span>}
+                                    {errors.firstname && (
+                                        <span className="error-message">
+                                            {errors.firstname[0]}
+                                        </span>
+                                    )}
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="lastname">Last Name</label>
@@ -247,7 +252,11 @@ export default function Auth() {
                                         value={formData.lastname}
                                         onChange={handleChange}
                                     />
-                                    {errors.lastname && <span className="error-message">{errors.lastname[0]}</span>}
+                                    {errors.lastname && (
+                                        <span className="error-message">
+                                            {errors.lastname[0]}
+                                        </span>
+                                    )}
                                 </div>
                             </motion.div>
 
@@ -263,7 +272,11 @@ export default function Auth() {
                                     value={formData.email}
                                     onChange={handleChange}
                                 />
-                                {errors.email && <span className="error-message">{errors.email[0]}</span>}
+                                {errors.email && (
+                                    <span className="error-message">
+                                        {errors.email[0]}
+                                    </span>
+                                )}
                             </motion.div>
 
                             <motion.div
@@ -279,7 +292,11 @@ export default function Auth() {
                                         value={formData.password}
                                         onChange={handleChange}
                                     />
-                                    {errors.password && <span className="error-message">{errors.password[0]}</span>}
+                                    {errors.password && (
+                                        <span className="error-message">
+                                            {errors.password[0]}
+                                        </span>
+                                    )}
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="confirmPassword">
@@ -293,7 +310,9 @@ export default function Auth() {
                                         onChange={handleChange}
                                     />
                                     {errors.password_confirmation && (
-                                        <span className="error-message">{errors.password_confirmation[0]}</span>
+                                        <span className="error-message">
+                                            {errors.password_confirmation[0]}
+                                        </span>
                                     )}
                                 </div>
                             </motion.div>
@@ -306,7 +325,7 @@ export default function Auth() {
                                 whileTap={{ scale: 0.98 }}
                                 disabled={isLoading}
                             >
-                                {isLoading ? 'Processing...' : 'Sign Up'}
+                                {isLoading ? "Processing..." : "Sign Up"}
                             </motion.button>
 
                             <motion.p
@@ -314,16 +333,18 @@ export default function Auth() {
                                 variants={itemVariants}
                             >
                                 Already have an account?{" "}
-                                <span onClick={() => {
-                                    setIsLogin(true);
-                                    setErrors({});
-                                }}>
+                                <span
+                                    onClick={() => {
+                                        setIsLogin(true);
+                                        setErrors({});
+                                    }}
+                                >
                                     Login
                                 </span>
                             </motion.p>
                         </motion.form>
                     ) : (
-                        <motion.form 
+                        <motion.form
                             onSubmit={handleSubmit}
                             variants={containerVariants}
                         >
@@ -341,7 +362,11 @@ export default function Auth() {
                                     value={formData.email}
                                     onChange={handleChange}
                                 />
-                                {errors.email && <span className="error-message">{errors.email[0]}</span>}
+                                {errors.email && (
+                                    <span className="error-message">
+                                        {errors.email[0]}
+                                    </span>
+                                )}
                             </motion.div>
 
                             <motion.div
@@ -356,7 +381,11 @@ export default function Auth() {
                                     value={formData.password}
                                     onChange={handleChange}
                                 />
-                                {errors.password && <span className="error-message">{errors.password[0]}</span>}
+                                {errors.password && (
+                                    <span className="error-message">
+                                        {errors.password[0]}
+                                    </span>
+                                )}
                             </motion.div>
 
                             <motion.button
@@ -367,7 +396,7 @@ export default function Auth() {
                                 whileTap={{ scale: 0.98 }}
                                 disabled={isLoading}
                             >
-                                {isLoading ? 'Logging in...' : 'Login'}
+                                {isLoading ? "Logging in..." : "Login"}
                             </motion.button>
 
                             <motion.p
@@ -375,10 +404,12 @@ export default function Auth() {
                                 variants={itemVariants}
                             >
                                 Doesn't have an account?{" "}
-                                <span onClick={() => {
-                                    setIsLogin(false);
-                                    setErrors({});
-                                }}>
+                                <span
+                                    onClick={() => {
+                                        setIsLogin(false);
+                                        setErrors({});
+                                    }}
+                                >
                                     Sign Up
                                 </span>
                             </motion.p>

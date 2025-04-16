@@ -85,7 +85,7 @@ const Home = () => {
                             variants={imageVariants}
                         >
                             <img
-                                src="/src/assets/images/section-1.png"
+                                src="/assets/section-1.png"
                                 alt="Product showcase platform"
                             />
                         </motion.div>
@@ -122,7 +122,7 @@ const Home = () => {
                             variants={reverseImageVariants}
                         >
                             <img
-                                src="/src/assets/images/section-2.png"
+                                src="/assets/section-2.png"
                                 alt="Product management features"
                             />
                         </motion.div>
@@ -155,7 +155,7 @@ const Home = () => {
                             variants={imageVariants}
                         >
                             <img
-                                src="/src/assets/images/section-3.png"
+                                src="/assets/section-3.png"
                                 alt="PrAdduct community platform"
                             />
                         </motion.div>
